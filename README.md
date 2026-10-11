@@ -1,2 +1,2 @@
 # Projeto da feira
-jogo 1
+jogo 1 e jogo 2
