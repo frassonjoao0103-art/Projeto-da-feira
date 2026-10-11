@@ -16,6 +16,10 @@
     --blue: #5D91FF;
 }
 
+#centro{
+    text-align: center;
+}
+
 * {
     box-sizing: border-box;
 }
