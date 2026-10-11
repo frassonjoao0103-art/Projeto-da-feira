@@ -13,7 +13,6 @@
     --bege: #F7F2DC;
     --sombra: 0 6px 20px #3E3A3310;
 
-    /* Cores originais do jogo */
     --green: #20D6A0;
     --red: #FF6078;
     --yellow: #FFD166;
@@ -191,8 +190,6 @@ h2 {
     font-weight: 700;
 }
 
-/* Painel das quatro cores */
-
 .simon-board {
     position: relative;
     display: grid;
@@ -224,28 +221,20 @@ h2 {
     cursor: default;
 }
 
-/* Verde original */
-
 .pad.green {
     background: var(--green);
     border-radius: 100% 14px 14px 14px;
 }
-
-/* Vermelho original */
 
 .pad.red {
     background: var(--red);
     border-radius: 14px 100% 14px 14px;
 }
 
-/* Amarelo original */
-
 .pad.yellow {
     background: var(--yellow);
     border-radius: 14px 14px 14px 100%;
 }
-
-/* Azul original */
 
 .pad.blue {
     background: var(--blue);
@@ -262,8 +251,6 @@ h2 {
     transform: scale(0.97);
 }
 
-/* Brilho de cada cor */
-
 .pad.green.lit {
     box-shadow: 0 0 30px #20D6A0A0;
 }
@@ -279,8 +266,6 @@ h2 {
 .pad.blue.lit {
     box-shadow: 0 0 30px #5D91FFA0;
 }
-
-/* Centro do painel */
 
 .board-center {
     position: absolute;
@@ -375,8 +360,6 @@ kbd {
     color: var(--texto);
 }
 
-/* Explicação sobre algoritmos */
-
 .learning-card {
     display: flex;
     gap: 18px;
@@ -425,8 +408,6 @@ kbd {
     font-size: 12px;
 }
 
-/* Rodapé */
-
 footer {
     display: flex;
     justify-content: space-between;
@@ -436,8 +417,6 @@ footer {
     color: var(--cinza);
     font-size: 11px;
 }
-
-/* Ajustes para celulares */
 
 @media (max-width: 540px) {
     .app {
@@ -491,8 +470,6 @@ footer {
         flex-direction: column;
     }
 }
-
-/* Respeita a preferência por menos animações */
 
 @media (prefers-reduced-motion: reduce) {
     *,
