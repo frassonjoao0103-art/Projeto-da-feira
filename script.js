@@ -1,17 +1,13 @@
 "use strict";
-
 const pads = [...document.querySelectorAll(".pad")];
-
 const scoreEl = document.querySelector("#score");
 const bestEl = document.querySelector("#best");
 const roundEl = document.querySelector("#round");
 const messageEl = document.querySelector("#message");
 const statusEl = document.querySelector("#game-status");
 const titleEl = document.querySelector("#game-title");
-
 const startBtn = document.querySelector("#start-btn");
 const restartBtn = document.querySelector("#restart-btn");
-
 const STORAGE_KEY = "algo-lab-sequence-best";
 const LIGHT_TIME = 430;
 const GAP_TIME = 170;
@@ -38,7 +34,6 @@ function saveBest() {
     try {
         localStorage.setItem(STORAGE_KEY, String(best));
     } catch {
-        // O jogo continua funcionando se o armazenamento estiver indisponível.
     }
 }
 
@@ -156,7 +151,11 @@ async function handlePadPress(index) {
 
     setMode("showing");
 
+    const token = roundToken;
+
     await lightPad(index, 170);
+
+    if (token !== roundToken) return;
 
     const expected = sequence[playerIndex];
 
@@ -192,8 +191,6 @@ async function handlePadPress(index) {
 
     setStatus("Rodada concluída");
     titleEl.textContent = "Excelente memória!";
-
-    const token = roundToken;
 
     await wait(900);
 

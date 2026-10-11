@@ -1,6 +1,5 @@
 :root {
     color-scheme: light;
-
     --fundo: #E9F2D9;
     --cartao: #FFFFFF;
     --cartao-claro: #F8FAF4;
@@ -10,9 +9,7 @@
     --verde-claro: #9CC7A3;
     --verde: #6B8F71;
     --verde-escuro: #315638;
-    --bege: #F7F2DC;
     --sombra: 0 6px 20px #3E3A3310;
-
     --green: #20D6A0;
     --red: #FF6078;
     --yellow: #FFD166;
@@ -210,11 +207,8 @@ h2 {
     border: 3px solid #FFFFFF;
     cursor: pointer;
     opacity: 0.78;
-    transition:
-        filter 150ms ease,
-        opacity 150ms ease,
-        transform 150ms ease,
-        box-shadow 150ms ease;
+    transition: filter 150ms ease, opacity 150ms ease,
+        transform 150ms ease, box-shadow 150ms ease;
 }
 
 .pad:disabled {
