@@ -504,3 +504,35 @@ footer {
     outline: 3px solid var(--verde);
     outline-offset: 3px;
 }
+
+.game-navigation {
+    display: flex;
+    justify-content: center;
+    margin: 16px auto;
+    padding: 0 12px;
+}
+
+.game-nav-button {
+    display: inline-block;
+    padding: 12px 20px;
+    border: 1px solid var(--borda);
+    border-radius: 10px;
+    background: var(--verde);
+    color: #FFFFFF;
+    font: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    text-align: center;
+    text-decoration: none;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.game-nav-button:hover {
+    background: #55765B;
+    transform: translateY(-2px);
+}
+
+.game-nav-button:focus-visible {
+    outline: 3px solid var(--verde-escuro);
+    outline-offset: 3px;
+}
