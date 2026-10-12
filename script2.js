@@ -113,13 +113,13 @@ function handleGuess(event) {
 
   const guess = Number(input.value);
 
-  // Validação (pra ver se ta entre 1 e 100)
+  // validaçao (pra ver se ta entre 1 e 100)
   if (!Number.isInteger(guess) || guess < MIN || guess > MAX) {
     messageEl.textContent = "Digite um número inteiro entre " + MIN + " e " + MAX + ".";
     return;
   }
 
-  // Palpite fora do intervalo possível: não conta tentativa
+  // palpite fora do intervalo possível: não conta tentativa
   if (guess < low || guess > high) {
     messageEl.textContent =
       "O " + guess + " já foi descartado. O número está entre " + low + " e " + high + ".";

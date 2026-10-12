@@ -10,10 +10,10 @@
     --verde: #6B8F71;
     --verde-escuro: #315638;
     --sombra: 0 6px 20px #3E3A3310;
-    --green: #20D6A0;
-    --red: #FF6078;
-    --yellow: #FFD166;
-    --blue: #5D91FF;
+    --green: green;
+    --red: red;
+    --yellow: yellow;
+    --blue: blue;
 }
 
 * {
