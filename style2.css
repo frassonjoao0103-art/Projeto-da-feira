@@ -38,9 +38,7 @@ button, input {
     font: inherit;
 }
 
-button:focus-visible,
-input:focus-visible,
-a:focus-visible {
+button:focus-visible, input:focus-visible, a:focus-visible {
     outline: 2px solid var(--verde);
     outline-offset: 3px;
 }
@@ -89,9 +87,7 @@ h1 {
     gap: 22px;
 }
 
-.game-panel,
-.info-panel,
-.learning-card {
+.game-panel, .info-panel, .learning-card {
     border: 1px solid var(--borda);
     border-radius: var(--raio);
     background: var(--branco);
@@ -253,8 +249,7 @@ input:disabled {
     margin: 28px 0 22px;
 }
 
-.history-section h2,
-.info-panel h2 {
+.history-section h2, .info-panel h2 {
     margin: 0;
     padding-bottom: 10px;
     border-bottom: 2px solid var(--fundo);

@@ -1,12 +1,8 @@
-/* =========================================================
-   ADIVINHE O NÚMERO
-   Lógica do jogo + dicas baseadas em busca binária
-   ========================================================= */
-
+/*ADIVINHE O NÚMERO*/
 const MIN = 1;
 const MAX = 100;
 
-/* ---------- 1. Referências aos elementos do HTML ---------- */
+/*Referências aos elementos do HTML*/
 const form        = document.getElementById("guess-form");
 const input       = document.getElementById("guess-input");
 const guessBtn    = document.getElementById("guess-btn");
@@ -20,7 +16,7 @@ const restartBtn  = document.getElementById("restart-btn");
 const rangeEl     = document.getElementById("range");
 const rangeBarEl  = document.getElementById("range-bar");
 
-/* ---------- 2. Estado do jogo ---------- */
+/*Estado do jogo*/
 let secret;     // número secreto
 let low;        // menor valor ainda possível
 let high;       // maior valor ainda possível
@@ -28,9 +24,9 @@ let attempts;   // quantidade de tentativas
 let guesses;    // lista de palpites
 let finished;   // true quando o jogador acerta
 
-/* ---------- 3. Funções auxiliares ---------- */
+/*Funções auxiliares*/
 
-// Sorteia um inteiro entre MIN e MAX (inclusive)
+// Sorteia um inteiro entre MIN e MAX
 function randomNumber() {
   return Math.floor(Math.random() * (MAX - MIN + 1)) + MIN;
 }
@@ -63,7 +59,7 @@ function updateStats() {
   }
 }
 
-// Adiciona um palpite ao histórico (status: "high", "low" ou "correct")
+// Adiciona um palpite ao histórico (status= high, low ou correct)
 function addToHistory(value, status) {
   const empty = historyEl.querySelector(".empty-history");
   if (empty) empty.remove();
@@ -75,7 +71,7 @@ function addToHistory(value, status) {
   historyEl.appendChild(item);
 }
 
-// Dica de busca binária: sugere o meio do intervalo
+// Dica de busca binária: sugere o meio dos numeros possiveis
 function suggestMiddle() {
   const middle = Math.floor((low + high) / 2);
   if (low === high) {
@@ -88,7 +84,7 @@ function suggestMiddle() {
   }
 }
 
-/* ---------- 4. Novo jogo ---------- */
+/*Novo jogo*/
 function startGame() {
   secret   = randomNumber();
   low      = MIN;
@@ -110,14 +106,14 @@ function startGame() {
   updateRange();
 }
 
-/* ---------- 5. Processar um palpite ---------- */
+/*Processar o palpite */
 function handleGuess(event) {
   event.preventDefault();
   if (finished) return;
 
   const guess = Number(input.value);
 
-  // Validação
+  // Validação (pra ver se ta entre 1 e 100)
   if (!Number.isInteger(guess) || guess < MIN || guess > MAX) {
     messageEl.textContent = "Digite um número inteiro entre " + MIN + " e " + MAX + ".";
     return;
@@ -168,9 +164,9 @@ function handleGuess(event) {
   }
 }
 
-/* ---------- 6. Eventos ---------- */
+/*Eventos*/
 form.addEventListener("submit", handleGuess);
 restartBtn.addEventListener("click", startGame);
 
-/* ---------- 7. Começa o primeiro jogo ---------- */
+/*Começa o primeiro jogo*/
 startGame();

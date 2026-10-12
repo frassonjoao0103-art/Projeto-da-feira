@@ -34,8 +34,7 @@ button {
     font: inherit;
 }
 
-button:focus-visible,
-a:focus-visible {
+button:focus-visible, a:focus-visible {
     outline: 3px solid var(--verde-escuro);
     outline-offset: 4px;
 }
@@ -65,8 +64,7 @@ a:focus-visible {
     text-decoration: none;
 }
 
-.brand-icon,
-.center-logo {
+.brand-icon, .center-logo {
     display: grid;
     place-items: center;
     background: linear-gradient(145deg, var(--verde-claro), var(--verde));
@@ -84,9 +82,7 @@ a:focus-visible {
     color: var(--verde);
 }
 
-.tag,
-.eyebrow,
-.stat-label {
+.tag, .eyebrow, .stat-label {
     font-size: 11px;
     font-weight: 800;
     letter-spacing: 1.5px;
@@ -130,9 +126,7 @@ h1 {
     margin-bottom: 18px;
 }
 
-.stat-card,
-.game-panel,
-.learning-card {
+.stat-card, .game-panel, .learning-card {
     border: 1px solid var(--borda);
     border-radius: 20px;
     background: var(--cartao);
