@@ -76,6 +76,7 @@ a:focus-visible {
 .jogos {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: stretch;
     gap: 22px;
 }
 
@@ -83,6 +84,7 @@ a:focus-visible {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    min-width: 0;
     padding: 30px;
     border: 1px solid var(--borda);
     border-radius: 20px;
@@ -100,8 +102,9 @@ a:focus-visible {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 66px;
-    height: 66px;
+    flex: 0 0 72px;
+    width: 72px;
+    height: 72px;
     margin-bottom: 23px;
     border: 1px solid var(--borda);
     border-radius: 18px;
@@ -110,43 +113,53 @@ a:focus-visible {
 
 .numero-icone span {
     display: grid;
-    width: 39px;
-    height: 39px;
+    width: 42px;
+    height: 42px;
     place-items: center;
     border-radius: 50%;
     background: var(--verde);
     color: #FFFFFF;
-    font-size: 27px;
+    font-size: 28px;
     font-weight: 900;
 }
 
 .cores-icone {
     display: grid;
-    grid-template-columns: repeat(2, 18px);
-    grid-template-rows: repeat(2, 18px);
+    grid-template-columns: repeat(2, 22px);
+    grid-template-rows: repeat(2, 22px);
+    place-content: center;
+    justify-items: center;
+    align-items: center;
     gap: 5px;
+    padding: 0;
+    overflow: hidden;
 }
 
 .cor {
-    width: 18px;
-    height: 18px;
-    border-radius: 6px;
+    display: block;
+    width: 22px;
+    height: 22px;
+    min-width: 22px;
+    min-height: 22px;
+    border: 2px solid #FFFFFF;
+    border-radius: 7px;
+    box-shadow: 0 1px 3px #3E3A3325;
 }
 
-.verde {
-    background: #20D6A0;
+.cor.verde {
+    background: #32B866;
 }
 
-.vermelho {
-    background: #FF6078;
+.cor.vermelho {
+    background: #F05252;
 }
 
-.amarelo {
-    background: #FFD166;
+.cor.amarelo {
+    background: #FFD43B;
 }
 
-.azul {
-    background: #5D91FF;
+.cor.azul {
+    background: #438BE8;
 }
 
 .categoria {
@@ -173,6 +186,7 @@ a:focus-visible {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
+    margin-top: auto;
     margin-bottom: 25px;
 }
 
@@ -195,7 +209,8 @@ a:focus-visible {
     min-height: 48px;
     margin-top: auto;
     padding: 0 18px;
-    border-radius: 10px;
+    border: 1px solid transparent;
+    border-radius: 12px;
     background: var(--verde);
     color: #FFFFFF;
     font-size: 14px;
@@ -206,14 +221,19 @@ a:focus-visible {
 
 .botao span {
     font-size: 20px;
+    transition: transform 180ms ease;
 }
 
 .botao:hover {
-    background: #55765B;
+    background: var(--verde-escuro);
+}
+
+.botao:hover span {
+    transform: translateX(3px);
 }
 
 .botao:active {
-    transform: scale(0.98);
+    transform: scale(.98);
 }
 
 .sobre {
@@ -262,7 +282,7 @@ footer {
     color: var(--cinza);
     font-size: 10px;
     font-weight: 700;
-    letter-spacing: 0.5px;
+    letter-spacing: .5px;
 }
 
 @media (max-width: 650px) {
