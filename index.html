@@ -12,10 +12,11 @@
 </head>
 <body>
     <nav class="game-navigation">
-    <a href="./inicio.html" class="game-nav-button">
-        ← Voltar à página inicial
-    </a>
-</nav>
+        <a href="./inicio.html" class="game-nav-button">
+            ← Voltar à página inicial
+        </a>
+    </nav>
+
     <main class="app">
         <section class="intro">
             <p class="eyebrow">DESAFIO DE LÓGICA</p>
@@ -29,15 +30,17 @@
         <section class="dashboard" aria-label="Estatísticas do jogo">
             <article class="stat-card">
                 <span class="stat-label">PONTUAÇÃO</span>
-                <strong id="score">0</strong>
+                <strong id="pontuacao">0</strong>
             </article>
+
             <article class="stat-card">
                 <span class="stat-label">RECORDE</span>
-                <strong id="best">0</strong>
+                <strong id="recorde">0</strong>
             </article>
+
             <article class="stat-card">
                 <span class="stat-label">SEQUÊNCIA</span>
-                <strong id="round">0</strong>
+                <strong id="rodada">0</strong>
             </article>
         </section>
 
@@ -45,18 +48,19 @@
             <div class="game-heading">
                 <div>
                     <p class="eyebrow">ÁREA DE JOGO</p>
-                    <h2 id="game-title">Pronto para testar?</h2>
+                    <h2 id="titulo-jogo">Pronto para testar?</h2>
                 </div>
-                <span id="game-status" class="status" role="status" aria-live="polite">
+
+                <span id="estado-jogo" class="status" role="status" aria-live="polite">
                     Aguardando início
                 </span>
             </div>
 
-            <div class="simon-board" id="board" aria-label="Painel com quatro cores">
-                <button class="pad green" data-color="0" aria-label="Verde" disabled></button>
-                <button class="pad red" data-color="1" aria-label="Vermelho" disabled></button>
-                <button class="pad yellow" data-color="2" aria-label="Amarelo" disabled></button>
-                <button class="pad blue" data-color="3" aria-label="Azul" disabled></button>
+            <div class="simon-board" id="tabuleiro" aria-label="Painel com quatro cores">
+                <button class="pad green" data-cor="0" aria-label="Verde" disabled></button>
+                <button class="pad red" data-cor="1" aria-label="Vermelho" disabled></button>
+                <button class="pad yellow" data-cor="2" aria-label="Amarelo" disabled></button>
+                <button class="pad blue" data-cor="3" aria-label="Azul" disabled></button>
 
                 <div class="board-center" aria-hidden="true">
                     <span class="center-logo">JP</span>
@@ -64,13 +68,13 @@
                 </div>
             </div>
 
-            <p id="message" class="message" aria-live="polite">
+            <p id="mensagem-jogo" class="message" aria-live="polite">
                 Pressione iniciar para ver a primeira sequência.
             </p>
 
             <div class="actions">
-                <button id="start-btn" class="btn btn-primary">▶ Iniciar jogo</button>
-                <button id="restart-btn" class="btn btn-secondary">↻ Reiniciar</button>
+                <button id="iniciar-jogo" class="btn btn-primary">▶ Iniciar jogo</button>
+                <button id="reiniciar-jogo" class="btn btn-secondary">↻ Reiniciar</button>
             </div>
 
             <p class="keyboard-hint">
@@ -78,20 +82,25 @@
                 <kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd> <kbd>4</kbd>.
             </p>
         </section>
+
         <nav class="game-navigation">
             <a href="./index2.html" class="game-nav-button">← Ir para Adivinhe o Número</a>
         </nav>
+
         <section class="learning-card">
             <div class="learning-icon">⌘</div>
+
             <div class="learning-content">
                 <p class="eyebrow">A CIÊNCIA POR TRÁS DO JOGO</p>
                 <h2>Como um algoritmo controla a sequência?</h2>
+
                 <p>
                     O jogo armazena as cores em uma sequência e apresenta cada uma
                     na ordem definida. O objetivo é repetir essa sequência corretamente,
                     que aumenta a cada rodada. Para funcionar, o programa utiliza arrays,
                     estruturas de repetição, condições e controle dos estados do jogo.
                 </p>
+
                 <div class="concepts">
                     <span>Arrays</span>
                     <span>Sequências</span>
@@ -100,6 +109,7 @@
                 </div>
             </div>
         </section>
+
         <footer>
             <span>João, Samuel, Luis, Lucas - CTISM 413</span>
             <span>INFORMÁTICA PARA INTERNET - 2026</span>

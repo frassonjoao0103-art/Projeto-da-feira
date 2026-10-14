@@ -1,14 +1,12 @@
-"use strict";
-
 document.addEventListener("DOMContentLoaded", () => {
-    const linksDosJogos = document.querySelectorAll(".botao");
+    const linksParaOsJogos = document.querySelectorAll(".botao");
 
-    linksDosJogos.forEach((link) => {
-        link.addEventListener("click", (event) => {
-            const destino = link.getAttribute("href");
+    linksParaOsJogos.forEach((linkDoJogo) => {
+        linkDoJogo.addEventListener("click", (eventoClique) => {
+            const enderecoDestino = linkDoJogo.getAttribute("href");
 
-            if (!destino || destino === "#") {
-                event.preventDefault();
+            if (!enderecoDestino || enderecoDestino === "#") {
+                eventoClique.preventDefault();
             }
         });
     });

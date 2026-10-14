@@ -1,244 +1,247 @@
-"use strict";
-const pads = [...document.querySelectorAll(".pad")];
-const scoreEl = document.querySelector("#score");
-const bestEl = document.querySelector("#best");
-const roundEl = document.querySelector("#round");
-const messageEl = document.querySelector("#message");
-const statusEl = document.querySelector("#game-status");
-const titleEl = document.querySelector("#game-title");
-const startBtn = document.querySelector("#start-btn");
-const restartBtn = document.querySelector("#restart-btn");
-const STORAGE_KEY = "algo-lab-sequence-best";
-const LIGHT_TIME = 430;
-const GAP_TIME = 170;
+const botoesCores = [...document.querySelectorAll(".pad")];
+const elementoPontuacao = document.querySelector("#pontuacao");
+const elementoRecorde = document.querySelector("#recorde");
+const elementoRodada = document.querySelector("#rodada");
+const elementoMensagem = document.querySelector("#mensagem-jogo");
+const elementoEstado = document.querySelector("#estado-jogo");
+const elementoTitulo = document.querySelector("#titulo-jogo");
+const botaoIniciar = document.querySelector("#iniciar-jogo");
+const botaoReiniciar = document.querySelector("#reiniciar-jogo");
 
-let sequence = [];
-let playerIndex = 0;
-let score = 0;
-let best = loadBest();
-let mode = "idle";
-let roundToken = 0;
+const CHAVE_ARMAZENAMENTO = "algo-lab-sequence-best";
+const TEMPO_LUZ = 430;
+const TEMPO_INTERVALO = 170;
 
-bestEl.textContent = best;
+let sequenciaCores = [];
+let indiceJogador = 0;
+let pontuacaoAtual = 0;
+let melhorPontuacao = carregarRecorde();
+let modoJogo = "idle";
+let identificadorRodada = 0;
 
-function loadBest() {
+elementoRecorde.textContent = melhorPontuacao;
+
+function carregarRecorde() {
     try {
-        const value = Number(localStorage.getItem(STORAGE_KEY));
-        return Number.isFinite(value) && value > 0 ? value : 0;
+        const valorArmazenado = Number(localStorage.getItem(CHAVE_ARMAZENAMENTO));
+
+        return Number.isFinite(valorArmazenado) && valorArmazenado > 0
+            ? valorArmazenado
+            : 0;
     } catch {
         return 0;
     }
 }
 
-function saveBest() {
+function salvarRecorde() {
     try {
-        localStorage.setItem(STORAGE_KEY, String(best));
+        localStorage.setItem(CHAVE_ARMAZENAMENTO, String(melhorPontuacao));
     } catch {
     }
 }
 
-function wait(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
+function esperar(milissegundos) {
+    return new Promise(resolver => setTimeout(resolver, milissegundos));
 }
 
-function updateDashboard() {
-    scoreEl.textContent = score;
-    bestEl.textContent = best;
-    roundEl.textContent = sequence.length;
+function atualizarPainel() {
+    elementoPontuacao.textContent = pontuacaoAtual;
+    elementoRecorde.textContent = melhorPontuacao;
+    elementoRodada.textContent = sequenciaCores.length;
 }
 
-function setStatus(text) {
-    statusEl.textContent = text;
+function definirEstado(textoEstado) {
+    elementoEstado.textContent = textoEstado;
 }
 
-function setMessage(text) {
-    messageEl.textContent = text;
+function definirMensagem(textoMensagem) {
+    elementoMensagem.textContent = textoMensagem;
 }
 
-function setMode(nextMode) {
-    mode = nextMode;
+function definirModo(proximoModo) {
+    modoJogo = proximoModo;
 
-    pads.forEach(pad => {
-        pad.disabled = mode !== "input";
+    botoesCores.forEach(botao => {
+        botao.disabled = modoJogo !== "input";
     });
 
-    startBtn.disabled = mode === "showing" || mode === "input";
+    botaoIniciar.disabled = modoJogo === "showing" || modoJogo === "input";
 
-    if (mode === "idle") {
-        startBtn.textContent = "▶ Iniciar jogo";
-    } else if (mode === "gameover") {
-        startBtn.textContent = "↻ Tentar novamente";
-        startBtn.disabled = false;
+    if (modoJogo === "idle") {
+        botaoIniciar.textContent = "▶ Iniciar jogo";
+    } else if (modoJogo === "gameover") {
+        botaoIniciar.textContent = "↻ Tentar novamente";
+        botaoIniciar.disabled = false;
     } else {
-        startBtn.textContent = "▶ Jogo em andamento";
+        botaoIniciar.textContent = "▶ Jogo em andamento";
     }
 }
 
-function lightPad(index, duration = LIGHT_TIME) {
-    const pad = pads[index];
+function iluminarBotao(indiceCor, duracao = TEMPO_LUZ) {
+    const botaoCor = botoesCores[indiceCor];
 
-    if (!pad) return Promise.resolve();
+    if (!botaoCor) return Promise.resolve();
 
-    pad.classList.add("lit");
+    botaoCor.classList.add("lit");
 
-    return wait(duration).then(() => {
-        pad.classList.remove("lit");
+    return esperar(duracao).then(() => {
+        botaoCor.classList.remove("lit");
     });
 }
 
-async function playSequence(token) {
-    setMode("showing");
-    setStatus("Observe as cores");
-    setMessage("Memorize a sequência antes da sua vez.");
-    titleEl.textContent = "Observe com atenção";
+async function reproduzirSequencia(identificadorAtual) {
+    definirModo("showing");
+    definirEstado("Observe as cores");
+    definirMensagem("Memorize a sequência antes da sua vez.");
+    elementoTitulo.textContent = "Observe com atenção";
 
-    await wait(500);
+    await esperar(500);
 
-    for (const color of sequence) {
-        if (token !== roundToken) return;
+    for (const indiceCor of sequenciaCores) {
+        if (identificadorAtual !== identificadorRodada) return;
 
-        await lightPad(color);
+        await iluminarBotao(indiceCor);
 
-        if (token !== roundToken) return;
+        if (identificadorAtual !== identificadorRodada) return;
 
-        await wait(GAP_TIME);
+        await esperar(TEMPO_INTERVALO);
     }
 
-    if (token !== roundToken) return;
+    if (identificadorAtual !== identificadorRodada) return;
 
-    playerIndex = 0;
+    indiceJogador = 0;
 
-    setMode("input");
-    setStatus("Sua vez!");
-    setMessage(`Repita as ${sequence.length} cores na ordem correta.`);
-    titleEl.textContent = "Agora é com você!";
+    definirModo("input");
+    definirEstado("Sua vez!");
+    definirMensagem(`Repita as ${sequenciaCores.length} cores na ordem correta.`);
+    elementoTitulo.textContent = "Agora é com você!";
 }
 
-function startNextRound() {
-    const token = roundToken;
+function iniciarProximaRodada() {
+    const identificadorAtual = identificadorRodada;
 
-    sequence.push(Math.floor(Math.random() * pads.length));
+    sequenciaCores.push(Math.floor(Math.random() * botoesCores.length));
 
-    updateDashboard();
-    playSequence(token);
+    atualizarPainel();
+    reproduzirSequencia(identificadorAtual);
 }
 
-function startGame() {
-    if (mode === "showing" || mode === "input") return;
+function iniciarJogo() {
+    if (modoJogo === "showing" || modoJogo === "input") return;
 
-    roundToken++;
-    sequence = [];
-    playerIndex = 0;
-    score = 0;
+    identificadorRodada++;
+    sequenciaCores = [];
+    indiceJogador = 0;
+    pontuacaoAtual = 0;
 
-    updateDashboard();
-    startNextRound();
+    atualizarPainel();
+    iniciarProximaRodada();
 }
 
-function finishGame() {
-    setMode("gameover");
-    setStatus("Fim de jogo");
-    titleEl.textContent = "Boa tentativa!";
+function finalizarJogo() {
+    definirModo("gameover");
+    definirEstado("Fim de jogo");
+    elementoTitulo.textContent = "Boa tentativa!";
 
-    setMessage(
-        `Você chegou à sequência ${sequence.length}. ` +
-        `Sua pontuação foi ${score}. Tente superar seu recorde!`
+    definirMensagem(
+        `Você chegou à sequência ${sequenciaCores.length}. ` +
+        `Sua pontuação foi ${pontuacaoAtual}. Tente superar seu recorde!`
     );
 }
 
-async function handlePadPress(index) {
-    if (mode !== "input") return;
+async function verificarCorEscolhida(indiceCorEscolhida) {
+    if (modoJogo !== "input") return;
 
-    setMode("showing");
+    definirModo("showing");
 
-    const token = roundToken;
+    const identificadorAtual = identificadorRodada;
 
-    await lightPad(index, 170);
+    await iluminarBotao(indiceCorEscolhida, 170);
 
-    if (token !== roundToken) return;
+    if (identificadorAtual !== identificadorRodada) return;
 
-    const expected = sequence[playerIndex];
+    const indiceCorEsperada = sequenciaCores[indiceJogador];
 
-    if (index !== expected) {
-        finishGame();
+    if (indiceCorEscolhida !== indiceCorEsperada) {
+        finalizarJogo();
         return;
     }
 
-    playerIndex++;
+    indiceJogador++;
 
-    if (playerIndex < sequence.length) {
-        setMode("input");
-        setStatus("Correto!");
+    if (indiceJogador < sequenciaCores.length) {
+        definirModo("input");
+        definirEstado("Correto!");
 
-        setMessage(
-            `Muito bem! Faltam ${sequence.length - playerIndex} cores.`
+        definirMensagem(
+            `Muito bem! Faltam ${sequenciaCores.length - indiceJogador} cores.`
         );
 
         return;
     }
 
-    score = sequence.length;
+    pontuacaoAtual = sequenciaCores.length;
 
-    if (score > best) {
-        best = score;
-        saveBest();
-        setMessage("Novo recorde! Preparando a próxima rodada...");
+    if (pontuacaoAtual > melhorPontuacao) {
+        melhorPontuacao = pontuacaoAtual;
+        salvarRecorde();
+        definirMensagem("Novo recorde! Preparando a próxima rodada...");
     } else {
-        setMessage("Sequência perfeita! Preparando a próxima rodada...");
+        definirMensagem("Sequência perfeita! Preparando a próxima rodada...");
     }
 
-    updateDashboard();
+    atualizarPainel();
 
-    setStatus("Rodada concluída");
-    titleEl.textContent = "Excelente memória!";
+    definirEstado("Rodada concluída");
+    elementoTitulo.textContent = "Excelente memória!";
 
-    await wait(900);
+    await esperar(900);
 
-    if (token !== roundToken) return;
+    if (identificadorAtual !== identificadorRodada) return;
 
-    startNextRound();
+    iniciarProximaRodada();
 }
 
-pads.forEach((pad, index) => {
-    pad.addEventListener("click", () => {
-        handlePadPress(index);
+botoesCores.forEach((botaoCor, indiceCor) => {
+    botaoCor.addEventListener("click", () => {
+        verificarCorEscolhida(indiceCor);
     });
 });
 
-startBtn.addEventListener("click", startGame);
+botaoIniciar.addEventListener("click", iniciarJogo);
 
-restartBtn.addEventListener("click", () => {
-    roundToken++;
+botaoReiniciar.addEventListener("click", () => {
+    identificadorRodada++;
 
-    sequence = [];
-    playerIndex = 0;
-    score = 0;
+    sequenciaCores = [];
+    indiceJogador = 0;
+    pontuacaoAtual = 0;
 
-    pads.forEach(pad => pad.classList.remove("lit"));
+    botoesCores.forEach(botaoCor => botaoCor.classList.remove("lit"));
 
-    updateDashboard();
-    setMode("idle");
+    atualizarPainel();
+    definirModo("idle");
 
-    setStatus("Aguardando início");
-    titleEl.textContent = "Pronto para testar?";
-    setMessage("Pressione iniciar para ver a primeira sequência.");
+    definirEstado("Aguardando início");
+    elementoTitulo.textContent = "Pronto para testar?";
+    definirMensagem("Pressione iniciar para ver a primeira sequência.");
 });
 
-document.addEventListener("keydown", event => {
-    if (event.repeat) return;
+document.addEventListener("keydown", eventoTeclado => {
+    if (eventoTeclado.repeat) return;
 
-    const keyToIndex = {
+    const teclasPorIndice = {
         "1": 0,
         "2": 1,
         "3": 2,
         "4": 3
     };
 
-    if (Object.hasOwn(keyToIndex, event.key)) {
-        event.preventDefault();
-        handlePadPress(keyToIndex[event.key]);
+    if (Object.hasOwn(teclasPorIndice, eventoTeclado.key)) {
+        eventoTeclado.preventDefault();
+        verificarCorEscolhida(teclasPorIndice[eventoTeclado.key]);
     }
 });
 
-updateDashboard();
-setMode("idle");
+atualizarPainel();
+definirModo("idle");

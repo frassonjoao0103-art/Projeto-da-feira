@@ -1,172 +1,205 @@
-/*ADIVINHE O NÚMERO*/
-const MIN = 1;
-const MAX = 100;
+const NUMERO_MINIMO = 1;
+const NUMERO_MAXIMO = 100;
 
-/*Referências aos elementos do HTML*/
-const form        = document.getElementById("guess-form");
-const input       = document.getElementById("guess-input");
-const guessBtn    = document.getElementById("guess-btn");
-const hintEl      = document.getElementById("hint");
-const messageEl   = document.getElementById("message");
-const attemptsEl  = document.getElementById("attempts");
-const highestEl   = document.getElementById("highest");
-const lowestEl    = document.getElementById("lowest");
-const historyEl   = document.getElementById("history");
-const restartBtn  = document.getElementById("restart-btn");
-const rangeEl     = document.getElementById("range");
-const rangeBarEl  = document.getElementById("range-bar");
+const formularioPalpite = document.getElementById("formulario-palpite");
+const campoPalpite = document.getElementById("campo-palpite");
+const botaoTentar = document.getElementById("botao-tentar");
+const elementoDica = document.getElementById("dica-jogo");
+const elementoMensagem = document.getElementById("mensagem-jogo");
+const elementoTentativas = document.getElementById("total-tentativas");
+const elementoMaiorPalpite = document.getElementById("maior-palpite");
+const elementoMenorPalpite = document.getElementById("menor-palpite");
+const elementoHistorico = document.getElementById("historico-palpites");
+const botaoNovoJogo = document.getElementById("botao-novo-jogo");
+const elementoIntervalo = document.getElementById("intervalo-possivel");
+const elementoBarraIntervalo = document.getElementById("barra-intervalo");
 
-/*Estado do jogo*/
-let secret;     // número secreto
-let low;        // menor valor ainda possível
-let high;       // maior valor ainda possível
-let attempts;   // quantidade de tentativas
-let guesses;    // lista de palpites
-let finished;   // true quando o jogador acerta
+let numeroSecreto;
+let menorNumeroPossivel;
+let maiorNumeroPossivel;
+let quantidadeTentativas;
+let listaPalpites;
+let jogoFinalizado;
 
-/*Funções auxiliares*/
-
-// Sorteia um inteiro entre MIN e MAX
-function randomNumber() {
-  return Math.floor(Math.random() * (MAX - MIN + 1)) + MIN;
+function sortearNumero() {
+    return Math.floor(Math.random() * (NUMERO_MAXIMO - NUMERO_MINIMO + 1)) + NUMERO_MINIMO;
 }
 
-// Troca o texto da dica mantendo o "Dica:" em um <span>
-function setHint(text) {
-  hintEl.innerHTML = "";
-  const label = document.createElement("span");
-  label.textContent = "Dica:";
-  hintEl.append(label, " " + text);
+function atualizarDica(textoDica) {
+    elementoDica.innerHTML = "";
+
+    const identificadorDica = document.createElement("span");
+    identificadorDica.textContent = "Dica:";
+
+    elementoDica.append(identificadorDica, " " + textoDica);
 }
 
-// Atualiza o intervalo possível e a barra de progresso
-function updateRange() {
-  rangeEl.textContent = low + " — " + high;
-  const size = high - low + 1;
-  const total = MAX - MIN + 1;
-  rangeBarEl.style.width = (size / total) * 100 + "%";
+function atualizarIntervalo() {
+    elementoIntervalo.textContent = menorNumeroPossivel + " — " + maiorNumeroPossivel;
+
+    const quantidadeNumerosPossiveis = maiorNumeroPossivel - menorNumeroPossivel + 1;
+    const quantidadeTotalNumeros = NUMERO_MAXIMO - NUMERO_MINIMO + 1;
+
+    elementoBarraIntervalo.style.width =
+        (quantidadeNumerosPossiveis / quantidadeTotalNumeros) * 100 + "%";
 }
 
-// Atualiza contador, maior e menor palpite
-function updateStats() {
-  attemptsEl.textContent = attempts;
-  if (guesses.length === 0) {
-    highestEl.textContent = "—";
-    lowestEl.textContent = "—";
-  } else {
-    highestEl.textContent = Math.max(...guesses);
-    lowestEl.textContent = Math.min(...guesses);
-  }
+function atualizarEstatisticas() {
+    elementoTentativas.textContent = quantidadeTentativas;
+
+    if (listaPalpites.length === 0) {
+        elementoMaiorPalpite.textContent = "—";
+        elementoMenorPalpite.textContent = "—";
+    } else {
+        elementoMaiorPalpite.textContent = Math.max(...listaPalpites);
+        elementoMenorPalpite.textContent = Math.min(...listaPalpites);
+    }
 }
 
-// Adiciona um palpite ao histórico (status= high, low ou correct)
-function addToHistory(value, status) {
-  const empty = historyEl.querySelector(".empty-history");
-  if (empty) empty.remove();
+function adicionarPalpiteAoHistorico(numeroPalpite, resultadoPalpite) {
+    const mensagemHistoricoVazio = elementoHistorico.querySelector(".empty-history");
 
-  const symbols = { high: "↓", low: "↑", correct: "✓" };
-  const item = document.createElement("span");
-  item.className = "history-item " + status;
-  item.textContent = value + " " + symbols[status];
-  historyEl.appendChild(item);
+    if (mensagemHistoricoVazio) {
+        mensagemHistoricoVazio.remove();
+    }
+
+    const simbolosResultado = {
+        high: "↓",
+        low: "↑",
+        correct: "✓"
+    };
+
+    const itemHistorico = document.createElement("span");
+
+    itemHistorico.className = "history-item " + resultadoPalpite;
+    itemHistorico.textContent = numeroPalpite + " " + simbolosResultado[resultadoPalpite];
+
+    elementoHistorico.appendChild(itemHistorico);
 }
 
-// Dica de busca binária: sugere o meio dos numeros possiveis
-function suggestMiddle() {
-  const middle = Math.floor((low + high) / 2);
-  if (low === high) {
-    setHint("só sobrou o número " + low + "!");
-  } else {
-    setHint(
-      "o número está entre " + low + " e " + high +
-      ". Que tal tentar o " + middle + "?"
+function sugerirNumeroDoMeio() {
+    const numeroCentral = Math.floor(
+        (menorNumeroPossivel + maiorNumeroPossivel) / 2
     );
-  }
+
+    if (menorNumeroPossivel === maiorNumeroPossivel) {
+        atualizarDica("só sobrou o número " + menorNumeroPossivel + "!");
+    } else {
+        atualizarDica(
+            "o número está entre " + menorNumeroPossivel + " e " + maiorNumeroPossivel +
+            ". Que tal tentar o " + numeroCentral + "?"
+        );
+    }
 }
 
-/*Novo jogo*/
-function startGame() {
-  secret   = randomNumber();
-  low      = MIN;
-  high     = MAX;
-  attempts = 0;
-  guesses  = [];
-  finished = false;
+function iniciarNovoJogo() {
+    numeroSecreto = sortearNumero();
+    menorNumeroPossivel = NUMERO_MINIMO;
+    maiorNumeroPossivel = NUMERO_MAXIMO;
+    quantidadeTentativas = 0;
+    listaPalpites = [];
+    jogoFinalizado = false;
 
-  historyEl.innerHTML = '<span class="empty-history">Nada por aqui ainda.</span>';
-  messageEl.textContent = "Faça seu primeiro palpite.";
-  setHint("escolha um número entre " + MIN + " e " + MAX + ".");
+    elementoHistorico.innerHTML =
+        '<span class="empty-history">Nada por aqui ainda.</span>';
 
-  input.value = "";
-  input.disabled = false;
-  guessBtn.disabled = false;
-  input.focus();
+    elementoMensagem.textContent = "Faça seu primeiro palpite.";
 
-  updateStats();
-  updateRange();
+    atualizarDica(
+        "escolha um número entre " + NUMERO_MINIMO + " e " + NUMERO_MAXIMO + "."
+    );
+
+    campoPalpite.value = "";
+    campoPalpite.disabled = false;
+    botaoTentar.disabled = false;
+    campoPalpite.focus();
+
+    atualizarEstatisticas();
+    atualizarIntervalo();
 }
 
-/*Processar o palpite */
-function handleGuess(event) {
-  event.preventDefault();
-  if (finished) return;
+function verificarPalpite(eventoFormulario) {
+    eventoFormulario.preventDefault();
 
-  const guess = Number(input.value);
+    if (jogoFinalizado) return;
 
-  // validaçao (pra ver se ta entre 1 e 100)
-  if (!Number.isInteger(guess) || guess < MIN || guess > MAX) {
-    messageEl.textContent = "Digite um número inteiro entre " + MIN + " e " + MAX + ".";
-    return;
-  }
+    const numeroPalpite = Number(campoPalpite.value);
 
-  // palpite fora do intervalo possível: não conta tentativa
-  if (guess < low || guess > high) {
-    messageEl.textContent =
-      "O " + guess + " já foi descartado. O número está entre " + low + " e " + high + ".";
-    input.select();
-    return;
-  }
+    if (
+        !Number.isInteger(numeroPalpite) ||
+        numeroPalpite < NUMERO_MINIMO ||
+        numeroPalpite > NUMERO_MAXIMO
+    ) {
+        elementoMensagem.textContent =
+            "Digite um número inteiro entre " +
+            NUMERO_MINIMO + " e " + NUMERO_MAXIMO + ".";
 
-  attempts++;
-  guesses.push(guess);
+        return;
+    }
 
-  if (guess === secret) {
-    // Acertou
-    finished = true;
-    addToHistory(guess, "correct");
-    low = high = secret;
-    messageEl.textContent =
-      "Acertou! O número era " + secret + ". Você usou " + attempts +
-      (attempts === 1 ? " tentativa." : " tentativas.");
-    setHint("fim de jogo! Clique em “Novo jogo” para jogar de novo.");
-    input.disabled = true;
-    guessBtn.disabled = true;
-  } else if (guess > secret) {
-    // Palpite alto demais
-    high = guess - 1;
-    addToHistory(guess, "high");
-    messageEl.textContent = "Muito alto! O número é menor que " + guess + ".";
-    suggestMiddle();
-  } else {
-    // Palpite baixo demais
-    low = guess + 1;
-    addToHistory(guess, "low");
-    messageEl.textContent = "Muito baixo! O número é maior que " + guess + ".";
-    suggestMiddle();
-  }
+    if (
+        numeroPalpite < menorNumeroPossivel ||
+        numeroPalpite > maiorNumeroPossivel
+    ) {
+        elementoMensagem.textContent =
+            "O " + numeroPalpite +
+            " já foi descartado. O número está entre " +
+            menorNumeroPossivel + " e " + maiorNumeroPossivel + ".";
 
-  updateStats();
-  updateRange();
+        campoPalpite.select();
 
-  if (!finished) {
-    input.value = "";
-    input.focus();
-  }
+        return;
+    }
+
+    quantidadeTentativas++;
+    listaPalpites.push(numeroPalpite);
+
+    if (numeroPalpite === numeroSecreto) {
+        jogoFinalizado = true;
+
+        adicionarPalpiteAoHistorico(numeroPalpite, "correct");
+
+        menorNumeroPossivel = maiorNumeroPossivel = numeroSecreto;
+
+        elementoMensagem.textContent =
+            "Acertou! O número era " + numeroSecreto +
+            ". Você usou " + quantidadeTentativas +
+            (quantidadeTentativas === 1 ? " tentativa." : " tentativas.");
+
+        atualizarDica("fim de jogo! Clique em “Novo jogo” para jogar de novo.");
+
+        campoPalpite.disabled = true;
+        botaoTentar.disabled = true;
+    } else if (numeroPalpite > numeroSecreto) {
+        maiorNumeroPossivel = numeroPalpite - 1;
+
+        adicionarPalpiteAoHistorico(numeroPalpite, "high");
+
+        elementoMensagem.textContent =
+            "Muito alto! O número é menor que " + numeroPalpite + ".";
+
+        sugerirNumeroDoMeio();
+    } else {
+        menorNumeroPossivel = numeroPalpite + 1;
+
+        adicionarPalpiteAoHistorico(numeroPalpite, "low");
+
+        elementoMensagem.textContent =
+            "Muito baixo! O número é maior que " + numeroPalpite + ".";
+
+        sugerirNumeroDoMeio();
+    }
+
+    atualizarEstatisticas();
+    atualizarIntervalo();
+
+    if (!jogoFinalizado) {
+        campoPalpite.value = "";
+        campoPalpite.focus();
+    }
 }
 
-/*Eventos*/
-form.addEventListener("submit", handleGuess);
-restartBtn.addEventListener("click", startGame);
+formularioPalpite.addEventListener("submit", verificarPalpite);
+botaoNovoJogo.addEventListener("click", iniciarNovoJogo);
 
-/*Começa o primeiro jogo*/
-startGame();
+iniciarNovoJogo();
