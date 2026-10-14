@@ -3,41 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#F7F0D8">
-    <meta name="description" content="Adivinhe o número e aprenda como funciona a busca binária.">
+    <meta name="theme-color" content="#E9F2D9">
+    <meta name="description" content="Descubra o número secreto e aprenda como funciona a busca binária.">
     <title>Adivinhe o Número | João Pedro</title>
-
     <link rel="stylesheet" href="./style2.css">
     <script src="./script2.js" defer></script>
 </head>
 <body>
     <nav class="game-navigation">
-        <a href="./inicio.html" class="game-nav-button">
-            ← Voltar à página inicial
-        </a>
+        <a href="./inicio.html" class="game-nav-button">← Voltar à página inicial</a>
     </nav>
 
     <main class="app">
-        <div id="cabecalho-centralizado">
-            <section class="intro">
-                <h1>Adivinhe o <span class="accent">número</span></h1>
-                <p class="subtitle">
-                    Tem um número escondido entre 1 e 100. Chute quantas vezes
-                    quiser, mas quanto menos chutes, melhor.
-                </p>
-            </section>
-        </div>
+        <section class="intro">
+            <h1>Adivinhe o <span class="accent">número</span></h1>
+            <p class="subtitle">
+                Existe um número escondido entre 1 e 100. Faça seus palpites e use as dicas
+                para descobrir qual é. Será que você consegue acertar em poucas tentativas?
+            </p>
+        </section>
 
         <section class="layout">
             <div class="game-panel">
                 <div class="hint-box">
                     <p id="dica-jogo" aria-live="polite">
-                        <span>Dica:</span> escolha um número entre 1 e 100.
+                        <span>Dica:</span> escolha um número entre 1 e 100 para começar.
                     </p>
                 </div>
 
                 <form id="formulario-palpite">
-                    <label for="campo-palpite">Seu palpite</label>
+                    <label for="campo-palpite">Digite seu palpite</label>
 
                     <div class="guess-row">
                         <input
@@ -57,7 +52,7 @@
                 </form>
 
                 <p id="mensagem-jogo" class="message" role="status" aria-live="polite">
-                    Faça seu primeiro palpite.
+                    Faça seu primeiro palpite e vamos começar!
                 </p>
 
                 <div class="stats">
@@ -78,37 +73,37 @@
                 </div>
 
                 <div class="history-section">
-                    <h2>Seus chutes</h2>
+                    <h2>Seus palpites</h2>
                     <div id="historico-palpites" class="history">
-                        <span class="empty-history">Nada por aqui ainda.</span>
+                        <span class="empty-history">Seus palpites aparecerão aqui.</span>
                     </div>
                 </div>
 
                 <button id="botao-novo-jogo" class="btn btn-secondary" type="button">
-                    Novo jogo
+                    Jogar novamente
                 </button>
             </div>
 
             <aside class="info-panel">
-                <h2>Regras rápidas</h2>
+                <h2>Como jogar</h2>
 
                 <ol class="steps">
-                    <li><p>Chute um número de 1 a 100.</p></li>
-                    <li><p>O jogo responde se o segredo é maior ou menor.</p></li>
-                    <li><p>Vá cortando o intervalo até acertar.</p></li>
+                    <li><p>Escolha um número entre 1 e 100.</p></li>
+                    <li><p>Veja se a dica indica um número maior ou menor.</p></li>
+                    <li><p>Use as informações para chegar cada vez mais perto da resposta.</p></li>
                 </ol>
 
                 <div class="algorithm-note">
-                    <h3>Truque do 50</h3>
+                    <h3>Experimente começar pelo 50</h3>
                     <p>
-                        Comece pelo 50. Se o segredo for maior, sobram os números
-                        de 51 a 100; se for menor, de 1 a 49. Assim, você descarta
-                        quase metade das opções logo no primeiro chute.
+                        Começar pelo meio ajuda bastante. Se o número secreto for maior,
+                        você pode procurar na metade de cima. Se for menor, procure na metade
+                        de baixo. Assim, você elimina várias possibilidades de uma vez.
                     </p>
                 </div>
 
                 <div class="range-box">
-                    <span>Ainda pode ser entre</span>
+                    <span>O número ainda pode estar entre</span>
                     <strong id="intervalo-possivel">1 — 100</strong>
 
                     <div class="range-track">
@@ -120,35 +115,33 @@
 
         <nav class="game-navigation">
             <a href="./index.html" class="game-nav-button">
-                Ir para Repita a Sequência →
+                Ir para o jogo Repita a Sequência →
             </a>
         </nav>
 
-        <div id="explicacao-centralizada">
-            <section class="learning-card">
-                <p class="eyebrow">Explicação de como funciona este algoritmo</p>
-                <h2>Então isso é um algoritmo?</h2>
+        <section class="learning-card">
+            <p class="eyebrow">Aprenda enquanto joga</p>
+            <h2>Onde entra o algoritmo?</h2>
 
-                <p>
-                    Um algoritmo é um passo a passo para resolver um problema.
-                    Neste jogo, cada palpite elimina números que não são o certo.
-                    Escolhendo sempre o número do meio, fica mais fácil encontrar
-                    a resposta. Assim, é possível descobrir o número em até
-                    7 tentativas, entre 100 números.
-                </p>
+            <p>
+                Um algoritmo é um conjunto de passos para resolver um problema.
+                Neste jogo, cada palpite ajuda a eliminar números que não são a resposta.
+                Quando você escolhe sempre o meio do intervalo e segue as dicas, consegue
+                descobrir o número em até 7 tentativas. Essa estratégia é chamada de
+                busca binária e mostra como a lógica pode facilitar uma tarefa.
+            </p>
 
-                <div class="concepts">
-                    <span>Lógica</span>
-                    <span>Condicionais</span>
-                    <span>Busca binária</span>
-                    <span>Divisão e conquista</span>
-                </div>
-            </section>
-        </div>
+            <div class="concepts">
+                <span>Lógica</span>
+                <span>Condicionais</span>
+                <span>Busca binária</span>
+                <span>Divisão e conquista</span>
+            </div>
+        </section>
 
         <footer>
-            <span>João, Samuel, Luis, Lucas · CTISM 413</span>
-            <span>INFORMÁTICA PARA INTERNET - 2026</span>
+            <span>João, Samuel, Luis e Lucas · CTISM 413</span>
+            <span>Informática para Internet · 2026</span>
         </footer>
     </main>
 </body>

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#E9F2D9">
-    <meta name="description" content="Repita a Sequência: um jogo de memória.">
+    <meta name="description" content="Repita a Sequência: um jogo de memória e atenção.">
 
     <title>Repita a Sequência | JP</title>
     <link rel="stylesheet" href="./style.css">
@@ -13,7 +13,7 @@
 <body>
     <nav class="game-navigation">
         <a href="./inicio.html" class="game-nav-button">
-            ← Voltar à página inicial
+            ← Voltar ao início
         </a>
     </nav>
 
@@ -22,8 +22,8 @@
             <p class="eyebrow">DESAFIO DE LÓGICA</p>
             <h1>Repita a <span class="accent">Sequência</span></h1>
             <p class="subtitle">
-                Observe as luzes, memorize a ordem e repita o padrão.
-                Cada rodada traz uma nova cor!
+                Preste atenção nas cores, memorize a ordem e tente repetir tudo.
+                A cada rodada, o desafio fica um pouco maior!
             </p>
         </section>
 
@@ -39,7 +39,7 @@
             </article>
 
             <article class="stat-card">
-                <span class="stat-label">SEQUÊNCIA</span>
+                <span class="stat-label">RODADA</span>
                 <strong id="rodada">0</strong>
             </article>
         </section>
@@ -48,7 +48,7 @@
             <div class="game-heading">
                 <div>
                     <p class="eyebrow">ÁREA DE JOGO</p>
-                    <h2 id="titulo-jogo">Pronto para testar?</h2>
+                    <h2 id="titulo-jogo">Vamos começar?</h2>
                 </div>
 
                 <span id="estado-jogo" class="status" role="status" aria-live="polite">
@@ -64,49 +64,50 @@
 
                 <div class="board-center" aria-hidden="true">
                     <span class="center-logo">JP</span>
-                    <span>info 1-2026</span>
+                    <span>INFO 1-2026</span>
                 </div>
             </div>
 
             <p id="mensagem-jogo" class="message" aria-live="polite">
-                Pressione iniciar para ver a primeira sequência.
+                Clique em "Iniciar jogo" e observe as cores que vão aparecer.
             </p>
 
             <div class="actions">
-                <button id="iniciar-jogo" class="btn btn-primary">▶ Iniciar jogo</button>
-                <button id="reiniciar-jogo" class="btn btn-secondary">↻ Reiniciar</button>
+                <button id="iniciar-jogo" class="btn btn-primary">
+                    ▶ Jogar agora
+                </button>
+
+                <button id="reiniciar-jogo" class="btn btn-secondary">
+                    ↻ Recomeçar
+                </button>
             </div>
 
             <p class="keyboard-hint">
-                Dica: você também pode usar as teclas
+                Quer jogar pelo teclado? Use as teclas
                 <kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd> <kbd>4</kbd>.
             </p>
         </section>
 
         <nav class="game-navigation">
-            <a href="./index2.html" class="game-nav-button">← Ir para Adivinhe o Número</a>
+            <a href="./index2.html" class="game-nav-button">
+                ← Conhecer o jogo Adivinhe o Número
+            </a>
         </nav>
 
         <section class="learning-card">
             <div class="learning-icon">⌘</div>
 
             <div class="learning-content">
-                <p class="eyebrow">A CIÊNCIA POR TRÁS DO JOGO</p>
-                <h2>Como um algoritmo controla a sequência?</h2>
+                <p class="eyebrow">ENTENDA O JOGO</p>
+                <h2>Como funciona?</h2>
 
                 <p>
-                    O jogo armazena as cores em uma sequência e apresenta cada uma
-                    na ordem definida. O objetivo é repetir essa sequência corretamente,
-                    que aumenta a cada rodada. Para funcionar, o programa utiliza arrays,
-                    estruturas de repetição, condições e controle dos estados do jogo.
+                    Tudo começa com algumas luzes piscando em uma ordem.
+                    Sua missão é prestar atenção e repetir o mesmo padrão.
+                    A cada acerto, uma nova cor é adicionada, deixando o jogo
+                    mais desafiador. Parece fácil no começo, mas será que você
+                    consegue chegar longe sem esquecer a sequência?
                 </p>
-
-                <div class="concepts">
-                    <span>Arrays</span>
-                    <span>Sequências</span>
-                    <span>Condições</span>
-                    <span>Lógica</span>
-                </div>
             </div>
         </section>
 
