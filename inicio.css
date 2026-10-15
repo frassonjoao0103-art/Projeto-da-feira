@@ -26,9 +26,7 @@ html {
 body {
     margin: 0;
     min-height: 100vh;
-    background:
-        radial-gradient(ellipse at 50% 0%, #DCE2D1 0%, transparent 55%),
-        var(--fundo);
+    background:var(--fundo);
     color: var(--texto);
     font-family: Arial, Helvetica, sans-serif;
     line-height: 1.6;
@@ -70,7 +68,7 @@ a {
 .introducao p {
     max-width: 530px;
     margin: 20px auto 0;
-    color: var(--cinza);
+    color: #FFFFFF;
     font-size: 16px;
     line-height: 1.8;
 }
@@ -149,19 +147,19 @@ a {
 }
 
 .cor.verde {
-    background: #405423;
+    background: #22C55E;
 }
 
 .cor.vermelho {
-    background: #542335;
+    background: #EF4444;
 }
 
 .cor.amarelo {
-    background: #545023;
+    background: #FACC15;
 }
 
 .cor.azul {
-    background: #4B2354;
+    background: #3B82F6;
 }
 
 .categoria {
@@ -325,19 +323,4 @@ footer {
         scroll-behavior: auto !important;
         transition: none !important;
     }
-}
-.cor.verde {
-    background: #22C55E;
-}
-
-.cor.vermelho {
-    background: #EF4444;
-}
-
-.cor.amarelo {
-    background: #FACC15;
-}
-
-.cor.azul {
-    background: #3B82F6;
 }

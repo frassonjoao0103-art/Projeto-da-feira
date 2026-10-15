@@ -80,7 +80,7 @@ h1 {
 .subtitle {
     max-width: 570px;
     margin: 0 auto;
-    color: var(--cinza);
+    color: #FFFFFF;
     font-size: 16px;
     line-height: 1.7;
 }
@@ -438,7 +438,7 @@ input:disabled {
 .learning-card {
     width: 100%;
     max-width: 750px;
-    margin: 22px auto 0;
+    margin: 0 auto 22px;
     padding: 30px;
     text-align: center;
 }
