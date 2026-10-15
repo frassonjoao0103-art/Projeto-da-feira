@@ -1,16 +1,18 @@
 :root {
     color-scheme: light;
-    --fundo: #E9F2D9;
+    --fundo: #98A97F;
     --cartao: #FFFFFF;
-    --cartao-claro: #F8FAF4;
-    --borda: #D1DDC7;
-    --texto: #3E3A33;
-    --cinza: #69695F;
-    --verde-claro: #9CC7A3;
-    --verde: #6B8F71;
-    --verde-escuro: #315638;
-    --amarelo: #D2D9E8;
-    --sombra: 0 8px 28px #3E3A3310;
+    --cartao-claro: #F5F6F0;
+    --borda: #D0D5C5;
+    --texto: #302D24;
+    --cinza: #545023;
+    --verde-claro: #98A97F;
+    --verde: #405423;
+    --verde-escuro: #303F1A;
+    --amarelo: #545023;
+    --vinho: #542335;
+    --roxo: #4B2354;
+    --sombra: 0 8px 28px #302D2418;
 }
 
 * {
@@ -25,7 +27,7 @@ body {
     margin: 0;
     min-height: 100vh;
     background:
-        radial-gradient(ellipse at 50% 0%, #D8E9D6 0%, transparent 55%),
+        radial-gradient(ellipse at 50% 0%, #DCE2D1 0%, transparent 55%),
         var(--fundo);
     color: var(--texto);
     font-family: Arial, Helvetica, sans-serif;
@@ -36,8 +38,8 @@ a {
     color: inherit;
 }
 
-a:focus-visible {
-    outline: 3px solid var(--verde-escuro);
+*:focus-visible {
+    outline: 3px solid var(--roxo);
     outline-offset: 4px;
 }
 
@@ -95,7 +97,7 @@ a:focus-visible {
 
 .card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 14px 34px #3E3A3318;
+    box-shadow: 0 14px 34px #302D2425;
 }
 
 .icone {
@@ -143,23 +145,23 @@ a:focus-visible {
     min-height: 22px;
     border: 2px solid #FFFFFF;
     border-radius: 7px;
-    box-shadow: 0 1px 3px #3E3A3325;
+    box-shadow: 0 1px 3px #302D2430;
 }
 
 .cor.verde {
-    background: #32B866;
+    background: #405423;
 }
 
 .cor.vermelho {
-    background: #F05252;
+    background: #542335;
 }
 
 .cor.amarelo {
-    background: #FFD43B;
+    background: #545023;
 }
 
 .cor.azul {
-    background: #438BE8;
+    background: #4B2354;
 }
 
 .categoria {
@@ -244,7 +246,7 @@ a:focus-visible {
     padding: 25px;
     border: 1px solid var(--borda);
     border-radius: 16px;
-    background: #F4F7EF;
+    background: #F5F6F0;
 }
 
 .sobre-icone {
@@ -254,8 +256,8 @@ a:focus-visible {
     height: 46px;
     place-items: center;
     border-radius: 13px;
-    background: #D8E9D6;
-    color: var(--verde-escuro);
+    background: #98A97F;
+    color: #302D24;
     font-size: 26px;
 }
 
@@ -323,4 +325,19 @@ footer {
         scroll-behavior: auto !important;
         transition: none !important;
     }
+}
+.cor.verde {
+    background: #22C55E;
+}
+
+.cor.vermelho {
+    background: #EF4444;
+}
+
+.cor.amarelo {
+    background: #FACC15;
+}
+
+.cor.azul {
+    background: #3B82F6;
 }

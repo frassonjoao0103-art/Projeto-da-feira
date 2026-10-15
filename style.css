@@ -1,21 +1,21 @@
 :root {
     color-scheme: light;
-    --fundo: #E9F2D9;
-    --cartao: #FFFFFF;
-    --cartao-claro: #F8FAF4;
-    --borda: #D1DDC7;
-    --texto: #3E3A33;
-    --cinza: #69695F;
-    --verde-claro: #9CC7A3;
-    --verde: #6B8F71;
-    --verde-escuro: #315638;
-    --amarelo: #D2D9E8;
+    --fundo: #98A97F;
+    --cartao: #F5F5EF;
+    --cartao-claro: #E9EBDD;
+    --borda: #98A97F;
+    --texto: #292A20;
+    --cinza: #545023;
+    --verde-claro: #98A97F;
+    --verde: #405423;
+    --verde-escuro: #405423;
+    --amarelo: #98A97F;
     --raio: 12px;
     --sombra: 0 6px 20px #3E3A3310;
-    --green: #32B866;
-    --red: #F05252;
-    --yellow: #FFD43B;
-    --blue: #438BE8;
+    --green: #405423;
+    --red: #542335;
+    --yellow: #545023;
+    --blue: #4B2354;
 }
 
 * {
@@ -258,19 +258,19 @@ h2 {
 }
 
 .pad.green.lit {
-    box-shadow: 0 0 0 3px #168D45, 0 0 30px #32B866B0;
+    box-shadow: 0 0 0 3px #98A97F, 0 0 30px #40542380;
 }
 
 .pad.red.lit {
-    box-shadow: 0 0 0 3px #C62828, 0 0 30px #F05252B0;
+    box-shadow: 0 0 0 3px #542335, 0 0 30px #54233580;
 }
 
 .pad.yellow.lit {
-    box-shadow: 0 0 0 3px #C69B00, 0 0 30px #FFD43BB0;
+    box-shadow: 0 0 0 3px #545023, 0 0 30px #54502380;
 }
 
 .pad.blue.lit {
-    box-shadow: 0 0 0 3px #175DB5, 0 0 30px #438BE8B0;
+    box-shadow: 0 0 0 3px #4B2354, 0 0 30px #4B235480;
 }
 
 .board-center {
@@ -401,7 +401,7 @@ kbd {
     height: 46px;
     place-items: center;
     border-radius: 14px;
-    background: #D8E9D6;
+    background: #E9EBDD;
     color: var(--verde-escuro);
     font-size: 25px;
 }
@@ -414,7 +414,7 @@ kbd {
     margin-top: 2px;
 }
 
-.learning-card p:not(.eyebrow) {
+.learning-card > p:not(.eyebrow) {
     margin-bottom: 0;
     color: var(--cinza);
     font-size: 16px;
@@ -540,7 +540,7 @@ footer {
         font-size: 21px;
     }
 
-    .learning-card p:not(.eyebrow) {
+    .learning-card > p:not(.eyebrow) {
         font-size: 14px;
     }
 
@@ -559,4 +559,30 @@ footer {
         animation-duration: .01ms !important;
         animation-iteration-count: 1 !important;
     }
+}
+:root {
+    --green: #22C55E;
+    --red: #EF4444;
+    --yellow: #FACC15;
+    --blue: #3B82F6;
+}
+
+.pad.green {
+    background: var(--green);
+    border-radius: 100% 12px 12px 12px;
+}
+
+.pad.red {
+    background: var(--red);
+    border-radius: 12px 100% 12px 12px;
+}
+
+.pad.yellow {
+    background: var(--yellow);
+    border-radius: 12px 12px 12px 100%;
+}
+
+.pad.blue {
+    background: var(--blue);
+    border-radius: 12px 12px 100% 12px;
 }
