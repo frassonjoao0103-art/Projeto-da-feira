@@ -560,3 +560,24 @@ footer {
         animation-iteration-count: 1 !important;
     }
 }
+
+:root {
+    color-scheme: light;
+    --fundo: #98A97F;
+    --cartao: #F5F5EF;
+    --cartao-claro: #E9EBDD;
+    --borda: #98A97F;
+    --texto: #292A20;
+    --cinza: #545023;
+    --verde-claro: #98A97F;
+    --verde: #405423;
+    --verde-escuro: #405423;
+    --amarelo: #98A97F;
+    --raio: 12px;
+    --sombra: 0 6px 20px #3E3A3310;
+
+    --green: #22C55E;
+    --red: #EF4444;
+    --yellow: #FACC15;
+    --blue: #3B82F6;
+}
